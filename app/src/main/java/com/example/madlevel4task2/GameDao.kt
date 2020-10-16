@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-interface RoomDao {
+interface GameDao {
     @Query("SELECT * FROM gameTable")
     suspend fun getAllGames(): List<Game>
 
