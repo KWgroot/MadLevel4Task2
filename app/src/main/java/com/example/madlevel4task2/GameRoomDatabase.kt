@@ -15,7 +15,7 @@ abstract class GameRoomDatabase : RoomDatabase() {
     companion object {
         private const val DATABASE_NAME = "GAME_DATABASE"
 
-        //@Volatile
+        @Volatile
         private var gameRoomDatabaseInstance: GameRoomDatabase? = null
 
         fun getDatabase(context: Context): GameRoomDatabase? {

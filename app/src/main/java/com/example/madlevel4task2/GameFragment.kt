@@ -24,6 +24,9 @@ class GameFragment : Fragment() {
 
     private lateinit var gameRepository: GameRepository
     private val mainScope = CoroutineScope(Dispatchers.Main)
+    private var wins = 0
+    private var losses = 0
+    private var draws = 0
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +46,8 @@ class GameFragment : Fragment() {
         ivPaper.setImageResource(R.drawable.paper)
         ivScissors.setImageResource(R.drawable.scissors)
 
+        tvStatistics.text = "Win: " + wins + " Draw: " + draws + " Lose: " + losses
+
         ivRock.setOnClickListener{
             runGame(0)
         }
@@ -57,7 +62,7 @@ class GameFragment : Fragment() {
     }
 
     private fun runGame(playerChoice: Int) {
-        val computerChoice = Random.nextInt(0, 2)
+        val computerChoice = Random.nextInt(0, 3)
 
         ivComputer.setImageResource(setChoice(playerChoice, computerChoice, true))
         ivYou.setImageResource(setChoice(playerChoice, computerChoice, false))
@@ -74,10 +79,12 @@ class GameFragment : Fragment() {
                 )
             }
         }
+        tvStatistics.text = "Win: " + wins + " Draw: " + draws + " Lose: " + losses
     }
 
     private fun winner(playerChoice: Int, computerChoice: Int): String {
         if (playerChoice == computerChoice) {
+            draws++
             mainScope.launch {
                 withContext(Dispatchers.Main) {
                     tvWinner.setText(R.string.draw)
@@ -85,6 +92,7 @@ class GameFragment : Fragment() {
             }
             return "Draw"
         } else if ((playerChoice == 0 && computerChoice == 2) || (playerChoice == 1 && computerChoice == 0) || (playerChoice == 2 && computerChoice == 1)) {
+            wins++
             mainScope.launch {
                 withContext(Dispatchers.Main) {
                     tvWinner.setText(R.string.win)
@@ -92,6 +100,7 @@ class GameFragment : Fragment() {
             }
             return "You win"
         } else if ((computerChoice == 0 && playerChoice == 2) || (computerChoice == 1 && playerChoice == 0) || (computerChoice == 2 && playerChoice == 1)) {
+            losses++
             mainScope.launch {
                 withContext(Dispatchers.Main) {
                     tvWinner.setText(R.string.lose)
