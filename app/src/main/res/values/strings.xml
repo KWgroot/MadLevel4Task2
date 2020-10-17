@@ -23,4 +23,7 @@
     <string name="computer_choice">Computer\'s choice</string>
     <string name="game_result">Game result</string>
     <string name="date_time">Date and Time</string>
+    <string name="draw">It\'s a draw!</string>
+    <string name="win">You win!</string>
+    <string name="lose">You lose!</string>
 </resources>
